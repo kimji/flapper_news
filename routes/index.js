@@ -25,7 +25,6 @@ router.get('/posts', function(req, res, next) {
 /* POST insert post */
 router.post('/posts', function(req, res, next) {
 	var post = new Post(req.body);
-	console.log(post);
 
 	post.save(function(err, post){
 		if(err){ return next(err); }
@@ -102,18 +101,14 @@ router.param('comment', function(req, res, next, id) {
 	});
 });
 
-/* GET get comment by comment id */
-router.get('/comments/:comment', function(req, res) {
-	res.json(req.comment);
-});
-
 /* PUT add upvote by post id */
-router.put('/comments/:comment/upvote', function(req, res, next) {
+router.put('/posts/:post/comments/:comment/upvote', function(req, res, next) {
   req.comment.upvote(function(err, comment){
     if (err) { return next(err); }
 
     res.json(comment);
   });
 });
+
 
 module.exports = router;
